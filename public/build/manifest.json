@@ -1,0 +1,25 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-tTOp_pGE.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-lhL8SZsD.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "resources/js/product.js"
+    ]
+  },
+  "resources/js/product.js": {
+    "file": "assets/product-BizcHCJw.js",
+    "name": "product",
+    "src": "resources/js/product.js",
+    "isEntry": true
+  }
+}
