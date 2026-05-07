@@ -39,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize quantity controls
     initializeQuantityControls();
-    
+
+    // Prefetch likely next-page navigations
+    initializeLinkPrefetch();
 
 });
 
@@ -864,6 +866,97 @@ function initializeMobileMenu() {
             mobileMenu.classList.toggle('hidden');
         });
     }
+}
+
+function initializeLinkPrefetch() {
+    const prefetched = new Set();
+
+    function isPrefetchableLink(link) {
+        if (!(link instanceof HTMLAnchorElement) || !link.href) {
+            return false;
+        }
+
+        if (link.dataset.noPrefetch !== undefined) {
+            return false;
+        }
+
+        if (link.target && link.target !== '_self') {
+            return false;
+        }
+
+        if (link.hasAttribute('download')) {
+            return false;
+        }
+
+        const url = new URL(link.href, window.location.href);
+
+        if (url.origin !== window.location.origin) {
+            return false;
+        }
+
+        if (url.pathname === window.location.pathname && url.search === window.location.search) {
+            return false;
+        }
+
+        if (url.hash && url.pathname === window.location.pathname) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function prefetchLink(link) {
+        if (!isPrefetchableLink(link)) {
+            return;
+        }
+
+        const url = new URL(link.href, window.location.href);
+        const key = url.toString();
+
+        if (prefetched.has(key)) {
+            return;
+        }
+
+        prefetched.add(key);
+
+        const prefetch = document.createElement('link');
+        prefetch.rel = 'prefetch';
+        prefetch.as = 'document';
+        prefetch.href = key;
+        prefetch.crossOrigin = 'same-origin';
+        document.head.appendChild(prefetch);
+    }
+
+    const links = Array.from(document.querySelectorAll('a[href]'));
+
+    links.forEach((link) => {
+        link.addEventListener('mouseenter', () => prefetchLink(link), { passive: true });
+        link.addEventListener('touchstart', () => prefetchLink(link), { passive: true, once: true });
+        link.addEventListener('focus', () => prefetchLink(link), { passive: true });
+    });
+
+    if (!('IntersectionObserver' in window)) {
+        return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) {
+                return;
+            }
+
+            prefetchLink(entry.target);
+            observer.unobserve(entry.target);
+        });
+    }, {
+        rootMargin: '200px 0px',
+    });
+
+    links.forEach((link) => {
+        if (isPrefetchableLink(link)) {
+            observer.observe(link);
+        }
+    });
 }
 
 // Notification system
