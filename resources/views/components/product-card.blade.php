@@ -10,7 +10,7 @@
              class="w-[95%] aspect-square object-contain"
              itemprop="image"
              loading="lazy"
-             onerror="this.src='https://via.placeholder.com/300x200/cccccc/ffffff?text=No+Image'; console.log('Image failed to load:', this.src);"
+             onerror="this.src='{{ asset('images/placeholder-product.svg') }}'; console.log('Image failed to load:', this.src);"
              onload="console.log('Image loaded successfully:', this.src);">
         </a>
         

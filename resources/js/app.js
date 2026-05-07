@@ -5,6 +5,8 @@ import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
 
+const PRODUCT_PLACEHOLDER_IMAGE = '/images/placeholder-product.svg';
+
 // E-commerce functionality
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize cart functionality
@@ -240,7 +242,7 @@ function initializeCart() {
                         <div class="p-3 border-b border-gray-100 hover:bg-gray-50">
                             <div class="flex items-start space-x-3">
                                 <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded flex-shrink-0" 
-                                     onerror="this.src='https://via.placeholder.com/48x48/cccccc/ffffff?text=No+Image'">
+                                     onerror="this.src='${PRODUCT_PLACEHOLDER_IMAGE}'">
                                 <div class="flex-1 min-w-0">
                                     <h4 class="text-sm font-medium text-gray-900 truncate">${item.name}</h4>
                                     <p class="text-sm text-gray-500">KES ${item.price.toLocaleString()}</p>
@@ -302,10 +304,10 @@ function updateCartPageContent(cart) {
         cartItemsHtml += `
             <div class="p-6 flex items-center space-x-4">
                 <img 
-                    src="${item.image || '/images/placeholder.png'}"
+                    src="${item.image || PRODUCT_PLACEHOLDER_IMAGE}"
                     alt="${item.name}"
                     class="w-20 h-20 object-cover rounded"
-                    onerror="this.src='/images/placeholder.png'"
+                    onerror="this.src='${PRODUCT_PLACEHOLDER_IMAGE}'"
                 >
 
                 <div class="flex-1">

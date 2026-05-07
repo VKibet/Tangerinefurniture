@@ -12,6 +12,8 @@ class Product extends Model
 {
     use HasFactory;
 
+    private const PLACEHOLDER_IMAGE = '/images/placeholder-product.svg';
+
     protected $fillable = [
         'category_id',
         'name',
@@ -138,13 +140,13 @@ class Product extends Model
 
     public function getMainImageAttribute()
     {
-        return $this->image ?? ($this->images[0] ?? 'https://via.placeholder.com/300x200/cccccc/ffffff?text=Product');
+        return $this->image ?? ($this->images[0] ?? self::PLACEHOLDER_IMAGE);
     }
 
     public function getMainImageUrlAttribute()
     {
         if (!$this->image) {
-            return 'https://via.placeholder.com/300x200/cccccc/ffffff?text=Product';
+            return asset(ltrim(self::PLACEHOLDER_IMAGE, '/'));
         }
         
         // Check if it's an external URL (http/https)
@@ -164,7 +166,7 @@ class Product extends Model
     public function getImageUrlAttribute($imagePath)
     {
         if (!$imagePath) {
-            return 'https://via.placeholder.com/300x200/cccccc/ffffff?text=Product';
+            return asset(ltrim(self::PLACEHOLDER_IMAGE, '/'));
         }
         
         // Check if it's an external URL (http/https)
