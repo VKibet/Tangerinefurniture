@@ -35,4 +35,14 @@ return [
         ],
     ],
 
+    'media' => [
+        'cloudfront_url' => rtrim((string) env('MEDIA_CLOUDFRONT_URL', ''), '/'),
+        'hero_video' => [
+            'poster' => env('HERO_VIDEO_POSTER', 'images/landing-fallback.jpg'),
+            'hls_manifest' => env('HERO_VIDEO_HLS_MANIFEST'),
+            'desktop_mp4' => env('HERO_VIDEO_DESKTOP_MP4', 'video/TFM-desktop.mp4'),
+            'mobile_mp4' => env('HERO_VIDEO_MOBILE_MP4', 'video/TFM-mobile.mp4'),
+        ],
+    ],
+
 ];

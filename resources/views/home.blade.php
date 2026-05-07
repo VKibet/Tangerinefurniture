@@ -56,7 +56,33 @@
 @endsection
 
 @section('content')
+    @php
+        $mediaConfig = config('services.media');
+        $cloudfrontUrl = $mediaConfig['cloudfront_url'] ?? '';
+        $heroVideo = $mediaConfig['hero_video'] ?? [];
+        $heroHlsManifest = $heroVideo['hls_manifest'] ?? null;
+        $mediaUrl = static function (?string $path) use ($cloudfrontUrl) {
+            if (blank($path)) {
+                return null;
+            }
 
+            if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+                return $path;
+            }
+
+            return $cloudfrontUrl !== ''
+                ? $cloudfrontUrl.'/'.ltrim($path, '/')
+                : asset($path);
+        };
+
+        $diningProducts = $categoryProducts['diningProducts'] ?? collect();
+        $bedProducts = $categoryProducts['bedProducts'] ?? collect();
+        $sofaProducts = $categoryProducts['sofaProducts'] ?? collect();
+        $coffeeTableProducts = $categoryProducts['coffeeTableProducts'] ?? collect();
+        $livingRoomProducts = $categoryProducts['livingRoomProducts'] ?? collect();
+        $wardrobeProducts = $categoryProducts['wardrobeProducts'] ?? collect();
+        $airbnbProducts = $categoryProducts['airbnbProducts'] ?? collect();
+    @endphp
 
     @php
         // Select from featured products available in various categories
@@ -80,12 +106,17 @@
         autoplay
         loop
         muted
-        preload="auto"
+        preload="metadata"
         playsinline
-        poster="{{ asset('images/landing-fallback.jpg') }}"
+        @if($heroHlsManifest)
+        data-hls-src="{{ $mediaUrl($heroHlsManifest) }}"
+        @endif
+        poster="{{ $mediaUrl($heroVideo['poster'] ?? 'images/landing-fallback.jpg') }}"
     >
-        <source src="{{ asset('video/TFM.mp4') }}" type="video/mp4" media="(min-width: 1280px)">
-        <source src="{{ asset('video/TFM.mp4') }}" type="video/mp4">
+        @if(!$heroHlsManifest)
+            <source src="{{ $mediaUrl($heroVideo['desktop_mp4'] ?? 'video/TFM-desktop.mp4') }}" type="video/mp4" media="(min-width: 1024px)">
+            <source src="{{ $mediaUrl($heroVideo['mobile_mp4'] ?? 'video/TFM-mobile.mp4') }}" type="video/mp4">
+        @endif
         </video>
     
     <!-- overlay + content on top as usual -->
@@ -211,10 +242,10 @@
     <section class="relative h-[50vh] bg-gray-900 overflow-hidden">
         <!-- Background Image -->
         <div class="absolute inset-0">
-            @if($livingRoomProducts->count() > 100)
+            @if($livingRoomProducts->count() > 0)
                 <img src="{{ $livingRoomProducts->first()->main_image_url }}" alt="Living Room" class="w-full h-full object-cover">
             @else
-                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80" alt="Dining Room" class="w-full h-full object-cover">
+                <img loading="lazy" src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80" alt="Dining Room" class="w-full h-full object-cover">
             @endif
             <div class="absolute inset-0 hero-overlay"></div>
         </div>
@@ -241,7 +272,7 @@
                         @if($bedProducts->count() > 0)
                             <img src="{{ $bedProducts->first()->main_image_url }}" alt="Beds" class="w-full h-full object-cover">
                         @else
-                            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Beds" class="w-full h-full object-cover">
+                            <img loading="lazy" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Beds" class="w-full h-full object-cover">
                         @endif
                     </div>
                     <div class=" absolute inset-0 flex w-full h-full items-center justify-center flex-col">
@@ -257,7 +288,7 @@
                         @if($livingRoomProducts->count() > 0)
                             <img src="{{ $livingRoomProducts->first()->main_image_url }}" alt="Living Room" class="w-full h-full object-cover">
                         @else
-                        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sofa" class="w-full h-full object-cover">
+                        <img loading="lazy" src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Sofa" class="w-full h-full object-cover">
                         @endif
                     </div>
                     <div class=" absolute inset-0 flex w-full h-full items-center justify-center flex-col">
@@ -460,6 +491,38 @@
     </div>
 </section>
 @endsection
+
+@push('scripts')
+    @if($heroHlsManifest)
+        <script src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js" defer></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const video = document.querySelector('video[data-hls-src]');
+
+                if (!video) {
+                    return;
+                }
+
+                const source = video.dataset.hlsSrc;
+
+                if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = source;
+                    return;
+                }
+
+                if (window.Hls && window.Hls.isSupported()) {
+                    const hls = new window.Hls({
+                        enableWorker: true,
+                        maxBufferLength: 30,
+                    });
+
+                    hls.loadSource(source);
+                    hls.attachMedia(video);
+                }
+            });
+        </script>
+    @endif
+@endpush
 
 
 <script>

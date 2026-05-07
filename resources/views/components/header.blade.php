@@ -1,8 +1,3 @@
-@php
-use App\Models\Setting;
-use App\Models\Category;
-@endphp
-
 <!-- Top Header Bar -->
 
 <div class="bg-gray-100 py-2 hidden md:block">
@@ -155,7 +150,7 @@ use App\Models\Category;
                             <span>All Products</span>
                         </a>
 
-                        @foreach(Category::active()->ordered()->get() as $category)
+                        @foreach($headerCategories as $category)
                             <a href="{{ route('products.index', ['category' => $category->slug]) }}"
                                class="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 {{ request('category') === $category->slug ? 'bg-blue-50 text-blue-600' : 'text-gray-700' }}">
                                 @if(!empty($category->icon))
@@ -203,15 +198,15 @@ use App\Models\Category;
                     <div class="space-y-2">
                         <div class="flex items-center space-x-3 p-3 text-gray-700">
                             <i class="fas fa-phone text-lg"></i>
-                            <span>{{ Setting::get('contact_phone', '+254 700 123 456') }}</span>
+                            <span>{{ $settings['contact_phone'] ?? '+254 700 123 456' }}</span>
                         </div>
                         <div class="flex items-center space-x-3 p-3 text-gray-700">
                             <i class="fas fa-envelope text-lg"></i>
-                            <span>{{ Setting::get('contact_email', 'hello@tangerinefurniture.co.ke') }}</span>
+                            <span>{{ $settings['contact_email'] ?? 'hello@tangerinefurniture.co.ke' }}</span>
                         </div>
                         <div class="flex items-center space-x-3 p-3 text-gray-700">
                             <i class="fas fa-map-marker-alt text-lg"></i>
-                            <span>{{ Setting::get('contact_address', 'Westlands, Nairobi') }}</span>
+                            <span>{{ $settings['contact_address'] ?? 'Westlands, Nairobi' }}</span>
                         </div>
                     </div>
                 </div>

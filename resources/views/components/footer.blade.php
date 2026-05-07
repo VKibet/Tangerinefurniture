@@ -1,8 +1,3 @@
-@php
-use App\Models\Setting;
-use App\Helpers\SocialMediaHelper;
-@endphp
-
 <!-- Footer Navigation -->
 <div class="bg-gray-900 py-6">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,13 +71,13 @@ use App\Helpers\SocialMediaHelper;
                 
                 <!-- Social Media Icons -->
                 <div class="flex space-x-4">
-                    <a href="{{ Setting::get('social_facebook', '#') }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+                    <a href="{{ $settings['social_facebook'] ?? '#' }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
                         <i class="fab fa-facebook-f text-xl"></i>
                     </a>
-                    <a href="{{ Setting::get('social_twitter', '#') }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+                    <a href="{{ $settings['social_twitter'] ?? '#' }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
                         <i class="fab fa-twitter text-xl"></i>
                     </a>
-                    <a href="{{ Setting::get('social_instagram', '#') }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
+                    <a href="{{ $settings['social_instagram'] ?? '#' }}" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white">
                         <i class="fab fa-instagram text-xl"></i>
                     </a>
                 </div>
