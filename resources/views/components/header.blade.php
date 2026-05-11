@@ -28,7 +28,7 @@
             <!-- Navigation Menu -->
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="{{ route('home') }}" class="text-white hover:text-gray-300 text-sm font-medium {{ request()->routeIs('home') ? 'text-gray-300' : '' }}">Home</a>
-                <a href="{{ route('products.index', ['category' => 'sofas-seating']) }}" class="text-white hover:text-gray-300 text-sm font-medium">Sofa's</a>
+                <a href="{{ route('products.index', ['category' => 'sofas-seating']) }}" class="text-white hover:text-gray-300 text-sm font-medium">Sofa</a>
                 <a href="{{ route('products.index', parameters: ['category' => 'dining']) }}" class="text-white hover:text-gray-300 text-sm font-medium">Dining Sets</a>
                 <a href="{{ route('products.index', ['category' => 'beds-bedroom']) }}" class="text-white hover:text-gray-300 text-sm font-medium">Beds</a>
                 <a href="{{ route('products.index', ['category' => 'hotel-restaurant']) }}" class="text-white hover:text-gray-300 text-sm font-medium">Hotel & Restaurants</a>
