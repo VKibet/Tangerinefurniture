@@ -25,6 +25,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // Categories
     Route::resource('categories', CategoryController::class);
     Route::post('categories/reorder', [CategoryController::class, 'reorder'])->name('categories.reorder');
+    Route::post('categories/{category}/assign-products', [CategoryController::class, 'assignProducts'])->name('categories.assign-products');
+    Route::post('categories/{category}/remove-product', [CategoryController::class, 'removeProduct'])->name('categories.remove-product');
     
     // Users
     Route::resource('users', UserController::class);

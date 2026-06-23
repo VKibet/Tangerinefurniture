@@ -41,7 +41,11 @@ use App\Models\Setting;
                             </div>
                             <div>
                                 <h3 class="text-base font-medium text-gray-900">Phone</h3>
-                                <p class="text-gray-600 text-sm">0791 708 804 / 0111 305 776</p>
+                                <p class="text-gray-600 text-sm">
+                                    <a href="tel:0791708894" class="hover:text-blue-600">0791 708 894</a> /
+                                    <a href="tel:0111305770" class="hover:text-blue-600">0111 305 770</a> /
+                                    <a href="tel:0784256077" class="hover:text-blue-600">0784 256 077</a>
+                                </p>
                                 <p class="text-xs text-gray-500">Monday - Saturday, 8:00 AM - 5:00 PM</p>
                             </div>
                         </div>
@@ -160,6 +164,22 @@ use App\Models\Setting;
                         Send Message
                     </button>
                 </form>
+            </div>
+        </div>
+
+        <!-- Google Map -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-semibold text-gray-900 mb-6 text-center">Find Us Here</h2>
+            <div class="rounded-xl overflow-hidden shadow-md border border-gray-200 w-full" style="height: 450px;">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.734426803466!2d36.8964344!3d-1.3355625000000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f172a0b099e43%3A0xfee1fb363ff66139!2sTangerine%20Furniture!5e0!3m2!1sen!2ske!4v1782230076957!5m2!1sen!2ske" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
             </div>
         </div>
     </div>

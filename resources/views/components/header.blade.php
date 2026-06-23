@@ -1,18 +1,3 @@
-<!-- Top Header Bar -->
-
-<div class="bg-gray-100 py-2 hidden md:block">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center text-sm">
-            <div class="text-gray-600">
-                This is site is still under development
-            </div>
-            <div class="flex items-center space-x-4">
-                <a href="{{ route('wishlist.index') }}" class="text-gray-600 hover:text-gray-800">Wishlist</a>
-                <a href="{{ route('cart.index') }}" class="text-gray-600 hover:text-gray-800">Cart</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- Main Header -->
 <header class="bg-gray-900 shadow-sm position: sticky top-0 z-30">
@@ -196,10 +181,18 @@
                 <div>
                     <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Contact</h3>
                     <div class="space-y-2">
-                        <div class="flex items-center space-x-3 p-3 text-gray-700">
+                        <a href="tel:0791708894" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
                             <i class="fas fa-phone text-lg"></i>
-                            <span>{{ $settings['contact_phone'] ?? '+254 700 123 456' }}</span>
-                        </div>
+                            <span>0791 708 894</span>
+                        </a>
+                        <a href="tel:0111305770" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-phone text-lg"></i>
+                            <span>0111 305 770</span>
+                        </a>
+                        <a href="tel:0784256077" class="flex items-center space-x-3 p-3 text-gray-700 hover:bg-gray-50 rounded-lg">
+                            <i class="fas fa-phone text-lg"></i>
+                            <span>0784 256 077</span>
+                        </a>
                         <div class="flex items-center space-x-3 p-3 text-gray-700">
                             <i class="fas fa-envelope text-lg"></i>
                             <span>{{ $settings['contact_email'] ?? 'hello@tangerinefurniture.co.ke' }}</span>
