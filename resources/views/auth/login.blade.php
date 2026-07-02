@@ -104,14 +104,8 @@
 
     <!-- Footer links -->
     <div style="margin-top:28px;text-align:center;">
-        <p style="font-size:13px;color:#9ca3af;margin:0;">
-            Don't have an account?
-            @if(Route::has('register'))
-                <a href="{{ route('register') }}" style="color:#f97316;font-weight:600;text-decoration:none;"> Create one</a>
-            @endif
-        </p>
         <a href="{{ route('home') }}"
-           style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#9ca3af;text-decoration:none;margin-top:12px;">
+           style="display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#9ca3af;text-decoration:none;">
             <i class="fas fa-arrow-left" style="font-size:11px;"></i> Back to store
         </a>
     </div>
