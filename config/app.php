@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Guru Digital'),
+    'name' => env('APP_NAME', 'Tangerine F'),
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +122,18 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Suspended Status
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if the application is currently suspended (e.g.,
+    | due to non-payment). This flag is typically intercepted by a global
+    | middleware to block access and display a custom suspension notice.
+    |
+    */
+
+    'suspended' => env('APP_SUSPENDED', false),
 
 ];
