@@ -15,8 +15,12 @@ class AdminUserSeeder extends Seeder
         // Make the first user an admin
         $user = User::first();
         if ($user) {
-            $user->update(['is_admin' => true]);
-            $this->command->info('First user is now an admin.');
+    $user->update([
+        'is_admin' => true,
+        'password' => bcrypt('Password@123')
+    ]);
+    $this->command->info('First user is now an admin and password was reset.');
+
         } else {
             // Create a new admin user if no users exist
             User::create([
