@@ -169,12 +169,12 @@
         <h1>System Maintenance</h1>
 
         <p>
-            We are currently optimizing our website to elevate your experience. Please check back shortly. We sincerely appreciate your patience.
+            Please check back shortly. We sincerely appreciate your patience.
         </p>
 
         <div class="status-container">
             <span class="pulse-dot"></span>
-            Maintenance is currently in progress
+            Maintenance in progress
         </div>
 
     </main>
