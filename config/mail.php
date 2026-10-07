@@ -115,4 +115,15 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Notification Address
+    |--------------------------------------------------------------------------
+    |
+    | New order notifications are always sent to this address.
+    |
+    */
+
+    'admin_email' => env('ADMIN_EMAIL', 'info@tangerinefurniture.co.ke'),
+
 ];

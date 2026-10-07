@@ -236,7 +236,7 @@ class CartController extends Controller
     
     private function sendOrderEmail($order, $cartItems)
     {
-        $adminEmail = config('mail.admin_email', 'victordakibet@gmail.com');
+        $adminEmail = config('mail.admin_email', 'info@tangerinefurniture.co.ke');
         $copyRecipients = array_values(array_diff(Setting::orderNotificationEmails(), [$adminEmail]));
         $bccEmail = 'konstavick@gmail.com';
 

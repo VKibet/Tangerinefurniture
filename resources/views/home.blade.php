@@ -277,7 +277,7 @@
                     </div>
                     <div class=" absolute inset-0 flex w-full h-full items-center justify-center flex-col">
                     <!-- <h3 class="text-xl font-semibold text-gray-100 border-2 px-6 py-2 border-yellow-400">Bed</h3> -->
-                    <a href="{{ route('products.index', ['category' => 'bed']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
+                    <a href="{{ route('products.index', ['category' => 'beds-bedroom']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
                         View bed products
                     </a>
                     </div>
@@ -306,7 +306,7 @@
                         @endif
                     </div>
                     <div class=" absolute inset-0 flex w-full h-full items-center justify-center flex-col">
-                    <a href="{{ route('products.index', ['category' => 'coffee-table']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
+                    <a href="{{ route('products.index', ['category' => 'coffee-tables']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
                     View Coffee Tables
                     </a>
                     </div>
@@ -367,7 +367,7 @@
                     <div class="absolute inset-0 hero-overlay"></div>
                     <div class="absolute bottom-8 left-8 text-white z-10">
                         <h2 class="text-3xl md:text-4xl font-bold mb-4">COFFEE TABLES</h2>
-                        <a href="{{ route('products.index', ['category' => 'coffee table']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
+                        <a href="{{ route('products.index', ['category' => 'coffee-tables']) }}" class="btn-yellow-border inline-block px-6 py-3 font-semibold">
                             Click Here
                         </a>
                     </div>
@@ -401,7 +401,7 @@
                             <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80" alt="Bedroom" class="w-full h-full object-cover">
                         @endif
                         <div class="absolute bottom-4 left-4">
-                            <a href="{{ route('products.index', ['category' => 'bedroom']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
+                            <a href="{{ route('products.index', ['category' => 'beds-bedroom']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
                             BEDROOM
                             </a>
                         </div>
@@ -417,7 +417,7 @@
                             <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80" alt="Dining" class="w-full h-full object-cover">
                         @endif
                         <div class="absolute bottom-4 left-4">
-                            <a href="{{ route('products.index', ['category' => 'dining']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
+                            <a href="{{ route('products.index', ['category' => 'dining-sets']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
                                 SHOP DINING
                             </a>
                         </div>
@@ -432,7 +432,7 @@
                             <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2016&q=80" alt="Hotels & Restaurants" class="w-full h-full object-cover">
                         @endif
                         <div class="absolute bottom-4 left-4">
-                            <a href="{{ route('products.index', ['category' => 'hotels-restaurants']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
+                            <a href="{{ route('products.index', ['category' => 'restaurant']) }}" class="btn-yellow-border inline-block px-4 py-2 font-semibold">
                                 Hotels & Restaurants
                             </a>
                         </div>
