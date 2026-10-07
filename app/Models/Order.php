@@ -14,6 +14,8 @@ class Order extends Model
     protected $fillable = [
         'user_id',
         'order_number',
+        'customer_name',
+        'customer_email',
         'total_amount',
         'status',
         'payment_status',
@@ -98,6 +100,22 @@ class Order extends Model
     public function scopeByPaymentStatus($query, $paymentStatus)
     {
         return $query->where('payment_status', $paymentStatus);
+    }
+
+    /**
+     * Customer name as entered at checkout, falling back to the linked user.
+     */
+    public function getCustomerDisplayNameAttribute(): string
+    {
+        return $this->customer_name ?: ($this->user->name ?? 'Guest');
+    }
+
+    /**
+     * Customer email as entered at checkout, falling back to the linked user.
+     */
+    public function getCustomerDisplayEmailAttribute(): string
+    {
+        return $this->customer_email ?: ($this->user->email ?? 'guest@example.com');
     }
 
     /**

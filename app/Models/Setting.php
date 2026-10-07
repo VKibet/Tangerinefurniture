@@ -32,15 +32,17 @@ class Setting extends Model
      */
     public static function set($key, $value)
     {
-        $setting = static::updateOrCreate(
-            ['key' => $key],
-            [
-                'value' => $value,
-                'label' => ucwords(str_replace('_', ' ', $key)),
-                'type' => 'text',
-                'group' => 'general'
-            ]
-        );
+        // Keep the existing group/label/type so saving a setting doesn't move it to "general"
+        $setting = static::firstOrNew(['key' => $key]);
+
+        if (!$setting->exists) {
+            $setting->label = ucwords(str_replace('_', ' ', $key));
+            $setting->type = 'text';
+            $setting->group = 'general';
+        }
+
+        $setting->value = $value;
+        $setting->save();
 
         // Refresh cache for that key
         Cache::forget("setting_{$key}");
@@ -65,5 +67,15 @@ class Setting extends Model
         return Cache::rememberForever('settings_all', function () {
             return static::pluck('value', 'key')->toArray();
         });
+    }
+
+    /**
+     * Extra recipients copied on new order notifications.
+     */
+    public static function orderNotificationEmails(): array
+    {
+        $emails = preg_split('/[\s,;]+/', (string) static::get('order_notification_emails', ''), -1, PREG_SPLIT_NO_EMPTY);
+
+        return array_values(array_unique(array_filter($emails, fn ($email) => filter_var($email, FILTER_VALIDATE_EMAIL))));
     }
 }

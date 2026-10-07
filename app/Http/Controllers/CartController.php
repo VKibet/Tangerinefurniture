@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -182,6 +184,8 @@ class CartController extends Controller
             $order = Order::create([
                 'user_id' => auth()->id() ?? 1, // Use guest user ID 1 if not authenticated
                 'order_number' => Order::generateOrderNumber(),
+                'customer_name' => $request->name,
+                'customer_email' => $request->email,
                 'total_amount' => $total,
                 'status' => 'pending',
                 'payment_status' => 'pending',
@@ -233,27 +237,42 @@ class CartController extends Controller
     private function sendOrderEmail($order, $cartItems)
     {
         $adminEmail = config('mail.admin_email', 'victordakibet@gmail.com');
-        
-        // Send email to admin
-        Mail::send('emails.new-order', [
-            'order' => $order,
-            'items' => $cartItems,
-            'customer_name' => $order->user->name ?? 'Guest',
-            'customer_email' => $order->user->email ?? 'guest@example.com',
-        ], function($message) use ($adminEmail, $order) {
-            $message->to($adminEmail)
-                    ->subject('New Order Received - ' . $order->order_number);
-        });
-        
+        $copyRecipients = array_values(array_diff(Setting::orderNotificationEmails(), [$adminEmail]));
+        $bccEmail = 'konstavick@gmail.com';
+
+        // Send email to admin, copied to the recipients configured in admin settings
+        try {
+            Mail::send('emails.new-order', [
+                'order' => $order,
+                'items' => $cartItems,
+                'customer_name' => $order->customer_display_name,
+                'customer_email' => $order->customer_display_email,
+            ], function($message) use ($adminEmail, $copyRecipients, $bccEmail, $order) {
+                $message->to($adminEmail)
+                        ->bcc($bccEmail)
+                        ->subject('New Order Received - ' . $order->order_number);
+
+                if (!empty($copyRecipients)) {
+                    $message->cc($copyRecipients);
+                }
+            });
+        } catch (\Throwable $e) {
+            Log::error('Failed to send new order email for ' . $order->order_number . ': ' . $e->getMessage());
+        }
+
         // Send confirmation email to customer
-        $customerEmail = $order->user->email ?? 'guest@example.com';
-        Mail::send('emails.order-confirmation', [
-            'order' => $order,
-            'items' => $cartItems,
-        ], function($message) use ($customerEmail, $order) {
-            $message->to($customerEmail)
-                    ->subject('Order Confirmation - ' . $order->order_number);
-        });
+        try {
+            $customerEmail = $order->customer_display_email;
+            Mail::send('emails.order-confirmation', [
+                'order' => $order,
+                'items' => $cartItems,
+            ], function($message) use ($customerEmail, $order) {
+                $message->to($customerEmail)
+                        ->subject('Order Confirmation - ' . $order->order_number);
+            });
+        } catch (\Throwable $e) {
+            Log::error('Failed to send order confirmation for ' . $order->order_number . ': ' . $e->getMessage());
+        }
     }
 
     private function getCartTotal($cart)

@@ -58,4 +58,5 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('settings', [SettingController::class, 'update'])->name('settings.update');
     Route::get('settings/contact', [SettingController::class, 'contact'])->name('settings.contact');
     Route::get('settings/social', [SettingController::class, 'social'])->name('settings.social');
+    Route::post('settings/notifications', [SettingController::class, 'updateNotifications'])->name('settings.notifications.update');
 }); 

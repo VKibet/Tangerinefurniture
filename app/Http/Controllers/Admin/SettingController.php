@@ -30,6 +30,27 @@ class SettingController extends Controller
         return back()->with('success', 'Settings updated successfully.');
     }
 
+    public function updateNotifications(Request $request)
+    {
+        $emails = preg_split('/[\s,;]+/', (string) $request->input('order_notification_emails'), -1, PREG_SPLIT_NO_EMPTY);
+
+        $invalid = array_filter($emails, fn ($email) => !filter_var($email, FILTER_VALIDATE_EMAIL));
+        if (!empty($invalid)) {
+            return back()
+                ->withInput()
+                ->withErrors(['order_notification_emails' => 'Invalid email address(es): ' . implode(', ', $invalid)]);
+        }
+
+        $setting = Setting::set('order_notification_emails', implode("\n", array_unique($emails)));
+        $setting->update([
+            'group' => 'notifications',
+            'label' => 'Order Notification Emails',
+            'type' => 'textarea',
+        ]);
+
+        return back()->with('success', 'Order notification recipients updated successfully.');
+    }
+
     public function contact()
     {
         $contactSettings = Setting::getGroup('contact');

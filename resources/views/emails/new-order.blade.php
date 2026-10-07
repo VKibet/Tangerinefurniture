@@ -87,7 +87,7 @@
         <div class="order-details">
             <h3>Order Details</h3>
             <p><strong>Order Number:</strong> {{ $order->order_number }}</p>
-            <p><strong>Date:</strong> {{ $order->created_at->format('F j, Y \a\t g:i A') }}</p>
+            <p><strong>Date:</strong> {{ $order->created_at->timezone('Africa/Nairobi')->format('F j, Y \a\t g:i A') }}</p>
             <p><strong>Status:</strong> <span class="status-badge status-pending">{{ ucfirst($order->status) }}</span></p>
             <p><strong>Payment Status:</strong> <span class="status-badge status-pending">{{ ucfirst($order->payment_status) }}</span></p>
             <p><strong>Payment Method:</strong> {{ ucwords(str_replace('_', ' ', $order->payment_method)) }}</p>

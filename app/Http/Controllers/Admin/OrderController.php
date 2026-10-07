@@ -37,6 +37,8 @@ class OrderController extends Controller
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('order_number', 'like', "%{$search}%")
+                  ->orWhere('customer_name', 'like', "%{$search}%")
+                  ->orWhere('customer_email', 'like', "%{$search}%")
                   ->orWhereHas('user', function($userQuery) use ($search) {
                       $userQuery->where('name', 'like', "%{$search}%")
                                ->orWhere('email', 'like', "%{$search}%");
@@ -111,6 +113,8 @@ class OrderController extends Controller
             $search = $request->search;
             $query->where(function($q) use ($search) {
                 $q->where('order_number', 'like', "%{$search}%")
+                  ->orWhere('customer_name', 'like', "%{$search}%")
+                  ->orWhere('customer_email', 'like', "%{$search}%")
                   ->orWhereHas('user', function($userQuery) use ($search) {
                       $userQuery->where('name', 'like', "%{$search}%")
                                ->orWhere('email', 'like', "%{$search}%");
@@ -165,8 +169,8 @@ class OrderController extends Controller
                         fputcsv($file, [
                             $order->order_number,
                             $order->created_at->format('Y-m-d H:i:s'),
-                            $order->user->name ?? 'Guest',
-                            $order->user->email ?? 'guest@example.com',
+                            $order->customer_display_name,
+                            $order->customer_display_email,
                             $order->phone ?? '',
                             $item->product->name ?? 'Product Deleted',
                             $item->product->slug ?? '',
@@ -187,8 +191,8 @@ class OrderController extends Controller
                     fputcsv($file, [
                         $order->order_number,
                         $order->created_at->format('Y-m-d H:i:s'),
-                        $order->user->name ?? 'Guest',
-                        $order->user->email ?? 'guest@example.com',
+                        $order->customer_display_name,
+                        $order->customer_display_email,
                         $order->phone ?? '',
                         'No Items',
                         '',

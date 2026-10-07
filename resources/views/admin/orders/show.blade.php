@@ -76,11 +76,11 @@
                 <div class="space-y-3">
                     <div>
                         <p class="text-sm text-gray-600">Name</p>
-                        <p class="font-medium">{{ $order->user->name ?? 'Guest' }}</p>
+                        <p class="font-medium">{{ $order->customer_display_name }}</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600">Email</p>
-                        <p class="font-medium">{{ $order->user->email ?? 'guest@example.com' }}</p>
+                        <p class="font-medium">{{ $order->customer_display_email }}</p>
                     </div>
                     <div>
                         <p class="text-sm text-gray-600">Phone</p>
